@@ -22,3 +22,8 @@ npm start
     - Home.css
 - The Home.js file is for the code that will be rendered on that page
 - Home.css is to help with stylizing of the page
+
+
+**Step 4: Fetch the data from SWAPI**
+- Create a state variable for the planest using the useState Hook
+- Fetch the API data using a useEffect hook.
