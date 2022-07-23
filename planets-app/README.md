@@ -37,4 +37,9 @@ npm start
 - I changed the tab name to Planet API App in ./public/index.html
 - I used Material UI for the table component. You must install this using the following: `npm install @mui/material @emotion/react @emotion/styled`
 - At Material UI you need to go to Components, Data Display and follow the instructions for Table
-- For this I used the Customization features in Table
+- For this I used the Customization features in Table (1 h 34 min)
+
+**Step 7: Display data in table**
+- Map through the planets state variable. Name, Climate, Terrain, and Population were simply called from the data.
+- For number of residents needed to find the length of the array using .length
+- Create a function, calculateSurfaceWater, for the percent of surface water

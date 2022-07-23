@@ -59,6 +59,13 @@ export default function Home() {
           border: 0,
         },
       }));
+    
+      // This function calculates the planets surface area covered by water
+    const calculateSurfaceWater = (props) => {
+        let planet_area = 4 * Math.PI * Math.pow((0.5 * props.diameter), 2);
+        let surfaceWater = Math.round(planet_area * (props.surface_water / 100));
+        return surfaceWater;
+      }
 
     // This function will render the planets but will first check to see if there is data in the state variable
     // If there is data in the state variable, it will render the planets
@@ -93,6 +100,13 @@ export default function Home() {
                                 {planets.map((planet) => (
                                     <StyledTableRow key={planet.name}>
                                         <StyledTableCell component="th" scope="row">{planet.name}</StyledTableCell>
+                                        <StyledTableCell component="th" scope="row" align="right">{planet.climate}</StyledTableCell>
+                                        <StyledTableCell component="th" scope="row" align="right">{planet.residents.length}</StyledTableCell>
+                                        <StyledTableCell component="th" scope="row" align="right">{planet.terrain}</StyledTableCell>
+                                        {/* Used if-else statement to check if population is null or undefined */}
+                                        <StyledTableCell component="th" scope="row" align="right">{!planet.population ? 'Unknown' : planet.population}</StyledTableCell>
+                                        {/* Used if-else for surface area but zero surface area is also returning unknown which is not true. Want to only apply to NaN */}
+                                        <StyledTableCell component="th" scope="row" align="right">{calculateSurfaceWater(planet) ? calculateSurfaceWater(planet) : 'Surface water is unknown' }</StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>
