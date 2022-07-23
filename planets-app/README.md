@@ -42,4 +42,8 @@ npm start
 **Step 7: Display data in table**
 - Map through the planets state variable. Name, Climate, Terrain, and Population were simply called from the data.
 - For number of residents needed to find the length of the array using .length
-- Create a function, calculateSurfaceWater, for the percent of surface water
+- Create a function, calculateSurfaceWater, for the percent of surface water (47 min)
+
+**Step 8: Link planet name to url**
+- Use an <a> tag around the planet name variable
+- The href for the <a> tag is planet.url

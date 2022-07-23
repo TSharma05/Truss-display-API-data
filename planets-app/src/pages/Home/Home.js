@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 
 // below are the different Material UI components that are imported to be used in the app
 import { styled } from '@mui/material/styles';
@@ -92,14 +93,14 @@ export default function Home() {
                                     <StyledTableCell align="right">Num of Residents</StyledTableCell>
                                     <StyledTableCell align="right">Terrains</StyledTableCell>
                                     <StyledTableCell align="right">Population</StyledTableCell>
-                                    <StyledTableCell align="right">Water Surface Area (%)</StyledTableCell>
+                                    <StyledTableCell align="right">Water Surface Area (km^2)</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {/* This will map through the planet state variable */}
                                 {planets.map((planet) => (
                                     <StyledTableRow key={planet.name}>
-                                        <StyledTableCell component="th" scope="row">{planet.name}</StyledTableCell>
+                                        <StyledTableCell component="th" scope="row"><a href={planet.url}>{planet.name}</a></StyledTableCell>
                                         <StyledTableCell component="th" scope="row" align="right">{planet.climate}</StyledTableCell>
                                         <StyledTableCell component="th" scope="row" align="right">{planet.residents.length}</StyledTableCell>
                                         <StyledTableCell component="th" scope="row" align="right">{planet.terrain}</StyledTableCell>
@@ -120,7 +121,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Home</h1>
+      <h1>Planet Data</h1>
       {renderPlanets()}
     </div>
   )
