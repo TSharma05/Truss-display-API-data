@@ -32,3 +32,9 @@ npm start
 - The function renderPlanets is used to render the planet data
 - If there is no data then it will display a loading message
 - This function will be called in the return div
+
+**Step 6: Create table for displaying data**
+- I changed the tab name to Planet API App in ./public/index.html
+- I used Material UI for the table component. You must install this using the following: `npm install @mui/material @emotion/react @emotion/styled`
+- At Material UI you need to go to Components, Data Display and follow the instructions for Table
+- For this I used the Customization features in Table

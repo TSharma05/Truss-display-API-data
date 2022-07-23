@@ -1,5 +1,15 @@
 import React, {useState, useEffect} from 'react'
 
+// below are the different Material UI components that are imported to be used in the app
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 
 
 export default function Home() {
@@ -28,6 +38,28 @@ export default function Home() {
         getPlanets()
     }, [])
 
+    // This function is used for styling the table cells. Copied from Material UI documentation.
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+          backgroundColor: theme.palette.common.black,
+          color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+          fontSize: 14,
+        },
+      }));
+    
+    // This function is used for styling the table rows. Copied from Material UI documentation.
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+          backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+          border: 0,
+        },
+      }));
+
     // This function will render the planets but will first check to see if there is data in the state variable
     // If there is data in the state variable, it will render the planets
     // If there is no data in the state variable, it will render a loading message
@@ -42,9 +74,33 @@ export default function Home() {
         }
         // the else statement will display the planet data
         else {
-            return planets.map(planet => {
-                return <p>{planet.name}</p>
-            })
+            return (
+                <div className="planet">
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 700}} aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell>Planet Name</StyledTableCell>
+                                    <StyledTableCell align="right">Climate</StyledTableCell>
+                                    <StyledTableCell align="right">Num of Residents</StyledTableCell>
+                                    <StyledTableCell align="right">Terrains</StyledTableCell>
+                                    <StyledTableCell align="right">Population</StyledTableCell>
+                                    <StyledTableCell align="right">Water Surface Area (%)</StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {/* This will map through the planet state variable */}
+                                {planets.map((planet) => (
+                                    <StyledTableRow key={planet.name}>
+                                        <StyledTableCell component="th" scope="row">{planet.name}</StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    {/* <p>{planet.name}</p> */}
+                </div>
+            )
         }
     }
 
