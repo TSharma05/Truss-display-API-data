@@ -9,3 +9,16 @@ cd planets-app
 npm start
 ```
 
+**Step 2: Create Routes in App.js**
+- You will need to install react router dom using the following: `npm i react-router-dom`. This will give you access to the BrowserRouter to help with navigation
+- Remove the HTML that is found between the first div with the className="App". Be sure to keep that div. 
+- Add in BrowserRouter and Routes since multiple routes will be generated.
+
+**Step 3: Create and Setup Home component**
+- In planets-app/src create a new folder titled pages
+- In ./src/pages create another folder titled Home
+- In .src/pages/Homes create two files: 
+    - Home.js
+    - Home.css
+- The Home.js file is for the code that will be rendered on that page
+- Home.css is to help with stylizing of the page
