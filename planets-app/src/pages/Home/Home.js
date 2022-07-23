@@ -27,9 +27,31 @@ export default function Home() {
         }
         getPlanets()
     }, [])
+
+    // This function will render the planets but will first check to see if there is data in the state variable
+    // If there is data in the state variable, it will render the planets
+    // If there is no data in the state variable, it will render a loading message
+    const renderPlanets = () => {
+        // this if statement will display a loading message while the API data is loading
+        if (loading) {
+            return <p>Loading...</p>
+        }
+        // this if statement will display if nothing is loading and there is no data in the state variable
+        if (!loading && !planets) {
+            return <p>There was an error</p>
+        }
+        // the else statement will display the planet data
+        else {
+            return planets.map(planet => {
+                return <p>{planet.name}</p>
+            })
+        }
+    }
+
   return (
     <div>
       <h1>Home</h1>
+      {renderPlanets()}
     </div>
   )
 }

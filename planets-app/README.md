@@ -27,3 +27,8 @@ npm start
 **Step 4: Fetch the data from SWAPI**
 - Create a state variable for the planest using the useState Hook
 - Fetch the API data using a useEffect hook.
+
+**Step 5: Function to render the data**
+- The function renderPlanets is used to render the planet data
+- If there is no data then it will display a loading message
+- This function will be called in the return div
