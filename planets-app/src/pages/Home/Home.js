@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+
+// import the TableHeader component to help with the sorting
+import TableHeader from '../../TableHeader/TableHeader'
 
 // below are the different Material UI components that are imported to be used in the app
 import { styled } from '@mui/material/styles';
@@ -16,6 +18,8 @@ import Paper from '@mui/material/Paper';
 export default function Home() {
     const [planets, setPlanets] = useState([]);  // this is the state variable that will hold the data from the API
     const [loading, setLoading] = useState(true); // this is the state variable that will hold the loading status
+    const [orderDirection, setOrderDirection] = useState("asc"); // this is the state variable that will hold the order direction
+    const [OrderBy, setOrderBy] = useState("name"); // this is the state variable that will hold the value to order by
 
     // The useEffect hook is used to perform side effects in response to changes in the component state.
     // This useEffect will fetch the planets data from the API and set the state to the data.
@@ -38,6 +42,7 @@ export default function Home() {
         }
         getPlanets()
     }, [])
+
 
     // This function is used for styling the table cells. Copied from Material UI documentation.
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -67,7 +72,42 @@ export default function Home() {
         let surfaceWater = Math.round(planet_area * (props.surface_water / 100));
         return surfaceWater;
       }
+    
+      // This function will handle the onClick event for the sort button.
+    const handleRequestSort = (event, property) => {
+        const isAsc = (OrderBy === property && orderDirection === 'asc');
+        setOrderBy(property);
+        setOrderDirection(isAsc ? 'desc' : 'asc');
+    }
+    
+    // the three functions below come from Material UI to handle the sorting
+    function descendingComparator(a, b, orderBy) {
+        if (b[orderBy] < a[orderBy]) {
+            return -1;
+        }
+        if (b[orderBy] > a[orderBy]) {
+            return 1;
+        }
+        return 0;
+    }
 
+    const getComparator = (order, orderBy) => {
+        return order === 'desc'
+            ? (a, b) => descendingComparator(a, b, orderBy)
+            : (a, b) => -descendingComparator(a, b, orderBy);
+    }
+
+    const sortedRowInformation = (rowArray, comparator) => {
+        const stabilizedRowArray = rowArray.map((el, index) => [el, index]);
+        stabilizedRowArray.sort((a, b) => {
+            const order = comparator(a[0], b[0]);
+            if (order !== 0) return order;
+            return a[1] - b[1];
+        })
+        return stabilizedRowArray.map(el => el[0]);
+    }
+    
+    
     // This function will render the planets but will first check to see if there is data in the state variable
     // If there is data in the state variable, it will render the planets
     // If there is no data in the state variable, it will render a loading message
@@ -88,7 +128,11 @@ export default function Home() {
                         <Table sx={{ minWidth: 700}} aria-label="customized table">
                             <TableHead>
                                 <TableRow>
-                                    <StyledTableCell>Planet Name</StyledTableCell>
+                                    <TableHeader 
+                                        OrderBy={OrderBy}
+                                        orderDirection={orderDirection}
+                                        handleRequestSort={handleRequestSort}
+                                    />
                                     <StyledTableCell align="right">Climate</StyledTableCell>
                                     <StyledTableCell align="right">Num of Residents</StyledTableCell>
                                     <StyledTableCell align="right">Terrains</StyledTableCell>
@@ -98,18 +142,20 @@ export default function Home() {
                             </TableHead>
                             <TableBody>
                                 {/* This will map through the planet state variable */}
-                                {planets.map((planet) => (
+                                {
+                                sortedRowInformation(planets, getComparator(orderDirection, OrderBy)).map((planet) => (
                                     <StyledTableRow key={planet.name}>
                                         <StyledTableCell component="th" scope="row"><a href={planet.url}>{planet.name}</a></StyledTableCell>
                                         <StyledTableCell component="th" scope="row" align="right">{planet.climate}</StyledTableCell>
                                         <StyledTableCell component="th" scope="row" align="right">{planet.residents.length}</StyledTableCell>
                                         <StyledTableCell component="th" scope="row" align="right">{planet.terrain}</StyledTableCell>
                                         {/* Used if-else statement to check if population is null or undefined */}
-                                        <StyledTableCell component="th" scope="row" align="right">{!planet.population ? 'Unknown' : planet.population}</StyledTableCell>
+                                        <StyledTableCell component="th" scope="row" align="right">{planet.population==='unknown' ? '?' : planet.population}</StyledTableCell>
                                         {/* Used if-else for surface area but zero surface area is also returning unknown which is not true. Want to only apply to NaN */}
                                         <StyledTableCell component="th" scope="row" align="right">{calculateSurfaceWater(planet) ? calculateSurfaceWater(planet) : 'Surface water is unknown' }</StyledTableCell>
                                     </StyledTableRow>
-                                ))}
+                                ))
+                                }
                             </TableBody>
                         </Table>
                     </TableContainer>

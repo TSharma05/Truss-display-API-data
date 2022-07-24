@@ -47,3 +47,10 @@ npm start
 **Step 8: Link planet name to url**
 - Use an <a> tag around the planet name variable
 - The href for the <a> tag is planet.url
+
+**Step 9: Sort table alphabetically**
+- Create a new folder in ./src called TableHeader
+- In ./src/TableHeader create a file called TableHeader.js
+- Import the TableHeader to the Home.js to use it in the data table
+- Copy the necessary functions from the Material UI documentation to get the sorting function to work.
+- For this we are only using this on the planet name but it could be applied to each category of the data table
