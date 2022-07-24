@@ -13,6 +13,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import './Home.css'
+
 
 
 export default function Home() {
@@ -52,6 +54,7 @@ export default function Home() {
         },
         [`&.${tableCellClasses.body}`]: {
           fontSize: 14,
+          border: '1px solid rgb(130, 125, 125)',
         },
       }));
     
@@ -69,8 +72,9 @@ export default function Home() {
       // This function calculates the planets surface area covered by water
     const calculateSurfaceWater = (props) => {
         let planet_area = 4 * Math.PI * Math.pow((0.5 * props.diameter), 2);
-        let surfaceWater = Math.round(planet_area * (props.surface_water / 100));
-        return surfaceWater;
+        let surfaceWater = Math.round(planet_area * (props.surface_water / 100)); 
+        let newSurfaceWater = surfaceWater.toLocaleString().replace(/,/g, " "); // converted to string and replaced all commas with spaces
+        return newSurfaceWater;
       }
     
       // This function will handle the onClick event for the sort button.
@@ -150,7 +154,7 @@ export default function Home() {
                                         <StyledTableCell component="th" scope="row" align="right">{planet.residents.length}</StyledTableCell>
                                         <StyledTableCell component="th" scope="row" align="right">{planet.terrain}</StyledTableCell>
                                         {/* Used if-else statement to check if population is null or undefined */}
-                                        <StyledTableCell component="th" scope="row" align="right">{planet.population==='unknown' ? '?' : planet.population}</StyledTableCell>
+                                        <StyledTableCell component="th" scope="row" align="right">{planet.population==='unknown' ? '?' : planet.population.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}</StyledTableCell>
                                         {/* Used if-else for surface area but zero surface area is also returning unknown which is not true. Want to only apply to NaN */}
                                         <StyledTableCell component="th" scope="row" align="right">{calculateSurfaceWater(planet) ? calculateSurfaceWater(planet) : 'Surface water is unknown' }</StyledTableCell>
                                     </StyledTableRow>

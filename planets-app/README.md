@@ -1,5 +1,14 @@
 # Truss Planets API
 
+## Run The Program
+- Fork this repository to your profile
+- Clone the repository to your local device.
+- Run the project using `npm start`.
+    - If the site doesn't come up then be sure you have all necessary libraries installed.  See the blow steps
+
+## Below are the step by step instructions for creating the data table
+- There are also comments within the code to help.
+
 **Step 1: Create React App**
 - Clone the git repository to your local device / IDE. I will be using VS Code
 - Create a react project using the following steps:
